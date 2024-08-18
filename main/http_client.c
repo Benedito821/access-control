@@ -154,6 +154,7 @@ static void http_rest_with_url(void)
      * If URL as well as host and path parameters are specified, values of host and path will be considered.
      */
     esp_http_client_config_t config = {
+        .port = 8000,
         .host = HTTP_ENDPOINT,
         .path = "/",
         .query = "esp",
@@ -165,18 +166,18 @@ static void http_rest_with_url(void)
 
     // GET
     esp_err_t err = esp_http_client_perform(client);
-    if (err == ESP_OK) {
-        ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %"PRId64,
-                esp_http_client_get_status_code(client),
-                esp_http_client_get_content_length(client));
-    } else {
-        ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
-    }
-    ESP_LOG_BUFFER_HEX(TAG, local_response_buffer, strlen(local_response_buffer));
+    // if (err == ESP_OK) {
+    //     ESP_LOGI(TAG, "HTTP GET Status = %d, content_length = %"PRId64,
+    //             esp_http_client_get_status_code(client),
+    //             esp_http_client_get_content_length(client));
+    // } else {
+    //     ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
+    // }
+    // ESP_LOG_BUFFER_CHAR(TAG, local_response_buffer, strlen(local_response_buffer));
 
     // POST
-    const char *post_data = "{\"field1\":\"value1\"}";
-    esp_http_client_set_url(client, "http://"HTTP_ENDPOINT"/");
+    const char *post_data = "{\"User\":\"User1-1919\"}";
+    esp_http_client_set_url(client, "http://"HTTP_ENDPOINT":8000/node");
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
     esp_http_client_set_post_field(client, post_data, strlen(post_data));
