@@ -1,0 +1,10 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "cmake.configureEnvironment": 
+  {
+    "IDF_PATH": "/home/benedito/esp/esp-idf-v5"
+  },
+  "idf.flashType": "UART",
+  "idf.port": "/dev/ttyUSB0"
+
+}
