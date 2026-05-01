@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Access Control</title>
+</head>
+<body>
+
+<h1 id="status">Waiting for scan...</h1>
+<h2 id="name"></h2>
+<img id="photo" width="200"/>
+
+<script>
+async function checkLast() {
+    const res = await fetch('/last');
+    const data = await res.json();
+
+    document.getElementById('status').innerText =
+        data.access ? "ACCESS GRANTED" : "ACCESS DENIED";
+
+    document.getElementById('name').innerText = data.name;
+
+    if (data.photo) {
+        document.getElementById('photo').src = '/' + data.photo;
+    }
+}
+
+setInterval(checkLast, 1000);
+</script>
+
+</body>
+</html>

@@ -6,27 +6,55 @@ const db = new sqlite3.Database('./users');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+app.use(express.static('public'));
+
+let lastScan = {
+    access: 0,
+    name: "",
+    photo: null
+};
 
 app.post('/post', (req, res) => {
-    const Uid = req.body.Uid;
+    const uid = req.body.Uid;
 
-    console.log("Received Uid:", Uid);
+    console.log("Received uid:", uid);
 
-    db.get('SELECT * FROM users WHERE Uid = ?', [Uid], (err, row) => {
+    db.get('SELECT * FROM users WHERE uid = ?', [uid], (err, row) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ access: 0 });
         }
 
+        let response;
+        
         if (!row) {
             console.log("Unknown card");
-            return res.json({ access: 0 });
+            response = {
+                access: 0,
+                name: "Unknown",
+                photo: null
+            };
+        }
+        else
+        {
+            console.log(`User: ${row.name}, allowed: ${row.allowed}`);
+
+            response = {
+                access: row.allowed,
+                name: row.name,
+                photo: row.photo
+            };
         }
 
-        console.log(`User: ${row.Name}, Allowed: ${row.Allowed}`);
+        lastScan = response;
 
-        return res.json({ access: row.Allowed });
+        return res.json(response);
     });
+});
+
+app.get('/last', (req, res) => {
+    res.json(lastScan);
 });
 
 app.listen(3000, '0.0.0.0', () => {
