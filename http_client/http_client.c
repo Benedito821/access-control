@@ -661,7 +661,7 @@ static void http_client_task(void *pvParameters)
         {
             if (xQueueReceive(tag_queue, &msg, portMAX_DELAY)) 
             {
-                snprintf(post_data, sizeof(post_data),"NewUser=%" PRIu64, msg);
+                snprintf(post_data, sizeof(post_data),"Uid=%" PRIu64, msg);
                 http_rest_with_url(post_data);
             }
         }
