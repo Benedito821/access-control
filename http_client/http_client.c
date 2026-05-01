@@ -28,10 +28,12 @@
 #include "http_client.h"
 #include "esp_http_client.h"
 #include "tasks_common.h"
+#include "cJSON.h"
 
 static const char *TAG = "HTTP_CLIENT";
 extern bool is_wifi_con_up;
 extern QueueHandle_t tag_queue;
+char response_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};
 
 /* Root cert for howsmyssl.com, taken from howsmyssl_com_root_cert.pem
 
@@ -108,12 +110,35 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt)
             break;
         case HTTP_EVENT_ON_FINISH:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_FINISH");
-            if (output_buffer != NULL) {
-#if CONFIG_EXAMPLE_ENABLE_RESPONSE_BUFFER_DUMP
-                ESP_LOG_BUFFER_HEX(TAG, output_buffer, output_len);
-#endif
-                free(output_buffer);
-                output_buffer = NULL;
+            if (evt->user_data) 
+            {
+                ((char*)evt->user_data)[output_len] = '\0';
+
+                cJSON *root = cJSON_Parse((char*)evt->user_data);
+
+                if (root == NULL) 
+                {
+                    ESP_LOGE(TAG, "JSON parse failed");
+                } 
+                else 
+                {
+                    cJSON *access = cJSON_GetObjectItem(root, "access");
+
+                    if (cJSON_IsNumber(access)) 
+                    {
+                        uint8_t allowed = access->valueint;
+
+                        if (allowed) 
+                        {
+                            ESP_LOGI(TAG, "ACCESS GRANTED");
+                        } 
+                        else 
+                        {
+                            ESP_LOGI(TAG, "ACCESS DENIED");
+                        }
+                    }
+                    cJSON_Delete(root);
+                }
             }
             output_len = 0;
             break;
@@ -145,6 +170,8 @@ static void http_rest_with_url(const char * const post_data)
 {
     esp_http_client_config_t config = {
         .url = HTTP_ENDPOINT,
+        .event_handler = _http_event_handler,
+        .user_data = response_buffer,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
