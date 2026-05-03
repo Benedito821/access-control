@@ -10,9 +10,9 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 
 let lastScan = {
-    access: 0,
-    name: "",
-    photo: null
+    access: -1,
+    name: "Unknown",
+    photo: "uploads/default.jpg"
 };
 
 app.post('/post', (req, res) => {
