@@ -172,6 +172,7 @@ static void http_rest_with_url(const char * const post_data)
         .url = HTTP_ENDPOINT,
         .event_handler = _http_event_handler,
         .user_data = response_buffer,
+        .keep_alive_enable = true
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);

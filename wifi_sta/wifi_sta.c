@@ -82,6 +82,8 @@ static void wifi_monitor_task(void *pvParameters)
 
             ESP_LOGI(TAG, "connected to ap SSID:%s",EXAMPLE_ESP_WIFI_SSID);
 
+            esp_wifi_set_ps(WIFI_PS_NONE);
+            
             is_wifi_con_up = true;
 
             http_client_start(); //launch the http client
