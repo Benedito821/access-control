@@ -40,9 +40,15 @@
 </div>
 
 <script>
-async function checkLast() {
-    const res = await fetch('/last');
-    const data = await res.json();
+let socket = new WebSocket('ws://localhost:3000');/*attach to the server's PC*/
+
+socket.onopen = () => {
+    console.log('WebSocket connected');
+};
+
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Received:', data);
 
     const statusEl = document.getElementById('status');
     const nameEl = document.getElementById('name');
@@ -66,10 +72,11 @@ async function checkLast() {
     nameEl.innerText = data.name || "Unknown";
 
     photoEl.src = '/' + (data.photo || 'uploads/default.jpg');
-}
+};
 
-checkLast();
-setInterval(checkLast, 1000);
+socket.onerror = (error) => {
+    console.log('WebSocket error:', error);
+};
 </script>
 
 </body>
