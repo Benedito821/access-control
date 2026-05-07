@@ -43,5 +43,14 @@ Server endpoint address(HTTP_ENDPOINT) from 6. and WiFi credentials  should be h
 | HSPI_SCK(GPIO14)   |    SCK   |
 |        GND         |    GND   |
 
-# Funcional Diagram
+# ESP32 - LED's connections 
+
+330 Ohm resistances were connected in series with the LED's. Other loads could mbe used instead,e.g. a relay, motor, etc.
+
+|       ESP32      |   LED   |
+| ---------------- | ------- |
+|      GPIO33      |  Green  |
+|      GPIO32      |   Red   |
+
+# Demo
 ![](https://github.com/Benedito821/access-control/blob/stable/access-control.gif)
