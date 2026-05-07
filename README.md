@@ -10,32 +10,28 @@ A router(AP) is needed to connect the ESP32 and the server PC together through W
 
 __On the server side:__
 
-1. Install Node.js: ``sudo apt install nodejs npm`` 
+1. On the project root run: ``chmod +x installPackages.sh`` 
+ 
+ then: 
 
-2. Install Express: ``npm install express`` 
+2. ``./installPackages.sh``
 
-3. Install the WebSocket library: ``npm install ws`` 
+3. If development is held on the server machine, install also VS Code with ESP-IDF v5.0 framework. Clone this repo and open the workspace file(on the repo root) on VS Code. After installing ESP-IDF extension, the required v5.0 release can be selected and clonned on the extension welcome page.
 
-4. Install SQLite for Node: ``npm install sqlite3``
+4. Open the _users.db_ on the DB Browser for SQLite GUI and fill in with your user cards data. Note that new user attributes can be added as needed.
 
-5. Install DB Browser(GUI for filling in the database): ``sudo apt install sqlitebrowser``
-
-6. If development is held on the server machine, install also VS Code with ESP-IDF v5.0 framework. Clone this repo and open the workspace file(on the repo root) on VS Code. After installing ESP-IDF extension, the required v5.0 release can be clonned on the extension welcome page.
-
-7. Open the _users.db_ on the DB Browser for SQLite GUI and fill in with your user cards data. Note that new user attributes can be added as needed.
-
-8. Run the server on the terminal inside the project root: ``node server.js``. You should get something like: 
+5. Run the server on the terminal inside the project root: ``node server.js``. You should get something like: 
 ```
 Server running on port 3000
 WS connection from: 127.0.0.1
 WebSocket client connected
 ``` 
 
-9. On any browser enter your_machine_ip:port/admin.html or just localhost:port/admin.html. In our case port=3000,so we get something like 192.168.0.5:3000/admin.html(or localhost:3000/admin.html). 
+6. On any browser enter your_machine_ip:port/admin.html or just localhost:port/admin.html. In our case port=3000,so we get something like 192.168.0.5:3000/admin.html(or localhost:3000/admin.html). 
  
 __On the ESP32 side:__ 
 
-Server endpoint address(HTTP_ENDPOINT) from 9. and WiFi credentials  should be hardcoded in http_client.h so it automatically connects to the AP upon powering. After a successfull connection the blue LED stops blinking. After that,build and flash the board. By tapping the badge/tag, if access is granted, the green LED turns on, otherwise, the red one.
+Server endpoint address(HTTP_ENDPOINT) from 6. and WiFi credentials  should be hardcoded in http_client.h so it automatically connects to the AP upon powering. After a successfull connection the blue LED stops blinking. After that,build and flash the board. By tapping the badge/tag, if access is granted, the green LED turns on, otherwise, the red one.
 
 # ESP32 - RC522 connections
 
