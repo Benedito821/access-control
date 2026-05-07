@@ -3,6 +3,9 @@
 #include <stdint.h>
 
 #define BLUE_LED_GPIO                    2
+#define GREEN_LED_GPIO                   GPIO_NUM_33
+#define RED_LED_GPIO                     GPIO_NUM_32
+
 
 #define WIFI_DISCONNECTED_DUTY_CYCLE     10
 #define WIFI_DISCONNECTED_FREQ           5
@@ -32,4 +35,20 @@ void blue_led_light_wifi_disconnected(void);
  * duty cycle to indicate  Wifi is connected
 */
 void blue_led_light_wifi_connected(void);
+
+/**
+ * Initialize the GREEN and RED external LED's
+*/
+void external_leds_init(void);
+
+/**
+ * write the GREEN external LED
+*/
+void write_green_led(uint32_t level);
+
+/**
+ * write the RED external LED
+*/
+void write_red_led(uint32_t level);
+
 #endif

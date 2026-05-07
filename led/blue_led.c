@@ -51,3 +51,29 @@ void blue_led_light_wifi_connected(void)
     ledc_update_duty(blue_led_info.mode,blue_led_info.channel);
     ledc_set_freq(blue_led_info.mode,blue_led_info.timer_index,(uint32_t)WIFI_CONNECTED_FREQ);
 }
+
+void write_green_led(uint32_t level)
+{
+    gpio_set_level(GREEN_LED_GPIO, level);
+}
+
+void write_red_led(uint32_t level)
+{
+    gpio_set_level(RED_LED_GPIO, level);
+}
+
+void external_leds_init(void)
+{
+        gpio_config_t io_conf = {
+            .pin_bit_mask = (1ULL << GPIO_NUM_32) | (1ULL << GPIO_NUM_33),
+            .mode = GPIO_MODE_OUTPUT,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .intr_type = GPIO_INTR_DISABLE
+    };
+
+    gpio_config(&io_conf);
+
+    write_green_led(0);
+    write_red_led(0);
+}

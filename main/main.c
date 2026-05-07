@@ -32,6 +32,8 @@ void app_main()
     ESP_ERROR_CHECK(ret);
     // configure the blue LED
     blue_led_pwm_init();
+    // configure the green,red LEDs
+    external_leds_init();
     //Start the Wifi
     wifi_init_sta();
 }

@@ -29,6 +29,7 @@
 #include "esp_http_client.h"
 #include "tasks_common.h"
 #include "cJSON.h"
+#include "blue_led.h"
 
 static const char *TAG = "HTTP_CLIENT";
 extern bool is_wifi_con_up;
@@ -131,10 +132,14 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt)
                         if (allowed) 
                         {
                             ESP_LOGI(TAG, "ACCESS GRANTED");
+                                write_green_led(1);
+                                write_red_led(0);
                         } 
                         else 
                         {
                             ESP_LOGI(TAG, "ACCESS DENIED");
+                                write_green_led(0);
+                                write_red_led(1);
                         }
                     }
                     cJSON_Delete(root);
