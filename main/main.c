@@ -22,7 +22,6 @@ void app_main()
     rc522_register_events(scanner, RC522_EVENT_ANY, rc522_handler, NULL);
     rc522_start(scanner);
 
-    //initialize NVS
     esp_err_t ret = nvs_flash_init();
     if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
     {
@@ -30,10 +29,10 @@ void app_main()
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-    // configure the blue LED
+
     blue_led_pwm_init();
-    // configure the green,red LEDs
+
     external_leds_init();
-    //Start the Wifi
+
     wifi_init_sta();
 }
