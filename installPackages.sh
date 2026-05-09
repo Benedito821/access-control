@@ -27,16 +27,15 @@ echo " Initializing Node project"
 echo "========================================="
 
 if [ ! -f package.json ]; then
-    npm init -y
+    echo "ERROR: package.json not found!"
+    exit 1
 fi
 
 echo "========================================="
 echo " Installing Node.js dependencies"
 echo "========================================="
 
-npm install express
-npm install ws
-npm install sqlite3
+npm install
 
 echo "========================================="
 echo " Installed versions"

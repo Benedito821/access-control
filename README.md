@@ -2,7 +2,7 @@
 | -------- | ----- | --------- | ------ | ---- | ---- | ------ | ---- | --- |
 
 # Access Control
-The project implements a simple system for access control using RFID cards(key cards). Upon scanning tapping the card,its serial number is checked against a database located on the server(a Linux machine in our case). If the serial number matches one of the existing ones on the database,holder data are shown on the admin webpage. The project uses ESP-IDF 5.0,VS Code and Ubuntu, but could also be replicated on Windows machines installing the respective packages. 
+The project implements a simple system for access control using RFID cards(key cards). Upon scanning tapping the card,its serial number is checked against a database located on the server(a Linux machine in our case). If the serial number matches one of the existing ones on the database,holder data are shown on the admin webpage. The project uses ESP-IDF v5.1.2,VS Code and Ubuntu 24.04.3 LTS, but could also be replicated on Windows machines installing the respective packages. The average system responsiveness(tap to LED triggering time) is around 200ms; a wired connection(through RJ-45) could improve this delay.
 
 # Getting up and run 
  
@@ -16,7 +16,7 @@ __On the server side:__
 
 2. ``./installPackages.sh``
 
-3. If development is held on the server machine, install also VS Code with ESP-IDF v5.0 framework. Clone this repo and open the workspace file(on the repo root) on VS Code. After installing ESP-IDF extension, the required v5.0 release can be selected and clonned on the extension welcome page.
+3. If development is held on the server machine, install also VS Code with ESP-IDF v5.1.2 framework. Clone this repo and open the workspace file(on the repo root) on VS Code. After installing ESP-IDF extension, the required version can be selected and clonned on the extension welcome page.
 
 4. Open the _users.db_ on the DB Browser for SQLite GUI and fill in with your user cards data. Note that new user attributes can be added as needed.
 
@@ -45,7 +45,7 @@ Server endpoint address(HTTP_ENDPOINT) from 6. and WiFi credentials  should be h
 
 # ESP32 - LED's connections 
 
-330 Ohm resistances were connected in series with the LED's. Other loads could mbe used instead,e.g. a relay, motor, etc.
+330 Ohm resistances were connected in series with the LED's. Other loads could be used instead,e.g. a relay, motor, etc.
 
 |       ESP32      |   LED   |
 | ---------------- | ------- |

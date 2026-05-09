@@ -2,6 +2,4 @@ sdkconfig.old
 sdkconfig.ci
 build/
 node_modules/
-package.json
-package-lock.json
 users.db
